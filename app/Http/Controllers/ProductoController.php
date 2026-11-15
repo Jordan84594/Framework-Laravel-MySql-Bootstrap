@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Producto;
+use App\Models\Categoria;
 use Illuminate\Http\Request;
 
 class ProductoController extends Controller
@@ -13,7 +14,10 @@ class ProductoController extends Controller
     public function index()
     {
         $productos = Producto::latest()->get();
-        return view('productos.index', compact('productos'));
+
+        $productosBajoStock = $productos->filter(fn($p)=>$p->tieneStockBajo());
+
+        return view('productos.index', compact('productos', 'productosBajoStock'));
     }
 
     /**
@@ -21,7 +25,8 @@ class ProductoController extends Controller
      */
     public function create()
     {
-        return view('productos.create');
+        $categorias = Categoria::orderBy('nombre')->get();
+        return view('productos.create', compact('categorias'));
     }
 
     /**
@@ -30,9 +35,11 @@ class ProductoController extends Controller
     public function store(Request $request)
     {
         $datos = $request->validate([
+            'categoria_id' => 'nullable|exists:categorias,id',
             'nombre' => 'required|string|max:255',
             'precio' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
+            'stock_minimo' => 'required|integer|min:0',
         ]);
 
         Producto::create($datos);
@@ -45,7 +52,8 @@ class ProductoController extends Controller
      */
     public function edit(Producto $producto)
     {
-        return view('productos.edit', compact('producto'));
+        $categorias = Categoria::orderBy('nombre')->get();
+        return view('productos.edit', compact('producto', 'categorias'));
     }
 
     /**
@@ -54,9 +62,11 @@ class ProductoController extends Controller
     public function update(Request $request, Producto $producto)
     {
         $datos = $request->validate([
+            'categoria_id' => 'nullable|exists:categorias,id',
             'nombre' => 'required|string|max:255',
             'precio' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
+            'stock_minimo' => 'required|integer|min:0',
         ]);
 
         $producto->update($datos);

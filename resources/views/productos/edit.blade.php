@@ -10,6 +10,19 @@
                     @csrf
                     @method('PUT')
                     <div class="mb-3">
+                        <label class="form-label">Categoría</label>
+                        <select name="categoria_id" class="form-select @error('categoria_id') is-invalid @enderror">
+                            <option value="">-- Sin categoría --</option>
+                            @foreach($categorias as $categoria)
+                                <option value="{{ $categoria->id }}" {{ old('categoria_id', $producto->categoria_id) == $categoria->id ? 'selected' : '' }}>
+                                    {{ $categoria->nombre }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('categoria_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                    </div>
+
+                    <div class="mb-3">
                         <label class="form-label">Nombre</label>
                         <input type="text" name="nombre" value="{{ old('nombre', $producto->nombre) }}" class="form-control @error('nombre') is-invalid @enderror">
                         @error('nombre') <div class="invalid-feedback">{{ $message }}</div> @enderror
@@ -21,10 +34,17 @@
                         @error('precio') <div class="invalid-feedback">{{ $message }}</div> @enderror
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Stock</label>
-                        <input type="number" name="stock" value="{{ old('stock', $producto->stock) }}" class="form-control @error('stock') is-invalid @enderror">
-                        @error('stock') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Stock</label>
+                            <input type="number" name="stock" value="{{ old('stock', $producto->stock) }}" class="form-control @error('stock') is-invalid @enderror">
+                            @error('stock') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Stock mínimo (alerta)</label>
+                            <input type="number" name="stock_minimo" value="{{ old('stock_minimo', $producto->stock_minimo) }}" class="form-control @error('stock_minimo') is-invalid @enderror">
+                            @error('stock_minimo') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        </div>
                     </div>
 
                     <div class="d-flex justify-content-end gap-2">
