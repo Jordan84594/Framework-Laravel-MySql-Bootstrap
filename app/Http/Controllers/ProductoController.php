@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Producto;
+use App\Models\Cliente;
 use Illuminate\Http\Request;
 
 class ProductoController extends Controller
@@ -13,7 +14,9 @@ class ProductoController extends Controller
     public function index()
     {
         $productos = Producto::latest()->get();
-        return view('productos.index', compact('productos'));
+        $clientes = Cliente::latest()->paginate(10);
+        return view('productos.index', compact('productos','clientes'));
+
     }
 
     /**
