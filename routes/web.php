@@ -1,12 +1,16 @@
+
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\VentaController;
 
-Route::redirect('/', '/productos');
+Route::redirect('/', '/dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+
 Route::resource('productos', ProductoController::class)->except(['show']);
 Route::resource('categorias', CategoriaController::class)->except(['show']);
 Route::resource('clientes', ClienteController::class);
