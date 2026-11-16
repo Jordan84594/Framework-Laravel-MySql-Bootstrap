@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Producto;
 use App\Models\Categoria;
+use App\Models\Cliente;
 use Illuminate\Http\Request;
 
 class ProductoController extends Controller
@@ -18,6 +19,9 @@ class ProductoController extends Controller
         $productosBajoStock = $productos->filter(fn($p)=>$p->tieneStockBajo());
 
         return view('productos.index', compact('productos', 'productosBajoStock'));
+        $clientes = Cliente::latest()->paginate(10);
+        return view('productos.index', compact('productos','clientes'));
+
     }
 
     /**
