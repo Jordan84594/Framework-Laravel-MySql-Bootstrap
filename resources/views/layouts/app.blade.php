@@ -13,6 +13,7 @@
             <div class="navbar-nav">
                 <a class="nav-link {{ request()->routeIs('productos.*') ? 'active fw-semibold' : '' }}" href="{{ route('productos.index') }}">Productos</a>
                 <a class="nav-link {{ request()->routeIs('categorias.*') ? 'active fw-semibold' : '' }}" href="{{ route('categorias.index') }}">Categorías</a>
+                <a class="nav-link {{ request()->routeIs('clientes.*') ? 'active fw-semibold' : '' }}" href="{{ route('clientes.index') }}">Clientes</a>
             </div>
         </div>
     </nav>
