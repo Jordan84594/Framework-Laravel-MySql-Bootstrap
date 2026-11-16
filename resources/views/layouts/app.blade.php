@@ -14,6 +14,7 @@
                 <a class="nav-link {{ request()->routeIs('productos.*') ? 'active fw-semibold' : '' }}" href="{{ route('productos.index') }}">Productos</a>
                 <a class="nav-link {{ request()->routeIs('categorias.*') ? 'active fw-semibold' : '' }}" href="{{ route('categorias.index') }}">Categorías</a>
                 <a class="nav-link {{ request()->routeIs('clientes.*') ? 'active fw-semibold' : '' }}" href="{{ route('clientes.index') }}">Clientes</a>
+                <a class="nav-link {{ request()->routeIs('ventas.*') ? 'active fw-semibold' : '' }}" href="{{ route('ventas.index') }}">Ventas</a>
             </div>
         </div>
     </nav>
@@ -27,5 +28,6 @@
 
         @yield('content')
     </div>
+    @stack('scripts')
 </body>
 </html>
